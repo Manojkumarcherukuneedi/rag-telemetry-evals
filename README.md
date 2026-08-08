@@ -44,7 +44,7 @@ three types, and exits non-zero if anything fails.
 
 ## Setup and running
 
-This project uses a venv folder literally named `venv` (not `.venv`).
+This project uses a venv folder 
 
 ```bash
 python -m venv venv
