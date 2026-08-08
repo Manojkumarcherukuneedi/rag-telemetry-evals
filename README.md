@@ -106,17 +106,3 @@ Two GitHub Actions workflows gate this project:
   LLM-as-judge pass over the open-ended cases. This calls the Anthropic API,
   so it's the paid gate — run less often, on demand or weekly, rather than on
   every push.
-
-### Adding the API key
-
-`full-eval.yml` needs `ANTHROPIC_API_KEY` available as a GitHub Actions
-secret:
-
-1. Go to the repo on GitHub → **Settings** → **Secrets and variables** →
-   **Actions**.
-2. Click **New repository secret**.
-3. Name it `ANTHROPIC_API_KEY` and paste your key as the value.
-4. Save. The workflow reads it via `${{ secrets.ANTHROPIC_API_KEY }}` — it is
-   never checked into the repo or printed in logs.
-
-`ci.yml` does not need this secret at all.
