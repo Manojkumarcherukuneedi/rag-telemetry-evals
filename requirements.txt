@@ -1,0 +1,4 @@
+sentence-transformers
+numpy
+rank-bm25
+anthropic

@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+*.pyc
+traces.jsonl
+evals/results.json
+evals/retrieval_results.json
+.env
+.claude/
