@@ -1,0 +1,3 @@
+html, body, #root { margin: 0; padding: 0; }
+body { background: oklch(0.16 0.008 264); }
+#root { min-height: 100vh; }
