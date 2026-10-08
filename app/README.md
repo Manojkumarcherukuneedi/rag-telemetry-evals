@@ -77,10 +77,28 @@ Response shape:
 An out-of-corpus question (e.g. `"what is the capital of France"`) returns
 `"answer": "Not answerable from the provided context."` with `"refused": true`.
 
+`POST /query` is rate-limited to 10 requests per minute per client IP; exceeding
+that returns HTTP 429 with a JSON `detail` message. This protects API spend once
+the service is public.
+
+## Configuration
+
+Environment variables (see `app/.env.example` and `app/frontend/.env.example`):
+
+- **`ANTHROPIC_API_KEY`** (backend) — required for generation (`/query`).
+  Retrieval runs without it.
+- **`ALLOWED_ORIGINS`** (backend) — comma-separated CORS origins. Add the
+  deployed frontend's URL here in production. Defaults to
+  `http://localhost:3000` and `http://localhost:5173` when unset.
+- **`VITE_API_BASE`** (frontend) — base URL of the backend the UI calls.
+  Defaults to `http://localhost:8000` for local dev; point it at the deployed
+  backend in production.
+
 ## Notes
 
 - Retrieval and telemetry logging (`traces.jsonl`) work exactly as in the CLI;
   every `/query` appends a trace.
 - Only generation (`/query`) needs `ANTHROPIC_API_KEY`. `/health` does not.
-- CORS is enabled for `http://localhost:3000` and `http://localhost:5173` so
-  the React frontend can call this cross-origin.
+- CORS origins default to `http://localhost:3000` and `http://localhost:5173`
+  so the React frontend can call this cross-origin, and are overridable via
+  `ALLOWED_ORIGINS`.

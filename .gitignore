@@ -5,4 +5,5 @@ traces.jsonl
 evals/results.json
 evals/retrieval_results.json
 .env
+.env.local
 .claude/

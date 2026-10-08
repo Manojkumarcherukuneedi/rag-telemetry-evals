@@ -1,7 +1,7 @@
 import { useState } from "react";
 import RagInspector from "./RagInspector.jsx";
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8000";
 
 export default function App() {
   const [result, setResult] = useState(null);
