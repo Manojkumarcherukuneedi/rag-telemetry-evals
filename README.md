@@ -4,6 +4,10 @@ A retrieval-augmented generation system built telemetry-first: each retrieval
 stage was added because instrumentation proved the previous one had a specific
 gap, and it ships with an eval harness that acts as a regression test suite.
 
+![RAG Inspector demo](docs/demo.gif)
+
+*The RAG Inspector web app: a question runs through the full pipeline, and the grounded answer appears beside its retrieval internals — per-chunk scores and which chunks the answer actually cited.*
+
 ## What it does
 
 The system grounds an LLM in a local markdown corpus. It retrieves with a
