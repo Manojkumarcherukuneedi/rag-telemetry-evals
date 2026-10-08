@@ -90,6 +90,44 @@ judge need `ANTHROPIC_API_KEY` set.
   though everything runs CPU-only. Pinning a CPU-only torch wheel would slim
   down install time in the workflow.
 
+## Web app — RAG Inspector
+
+A local web app that runs a question through the full pipeline and shows the
+grounded answer alongside its retrieval internals side by side — the per-chunk
+dense, BM25, and rerank scores, and which chunks the answer actually cited (the
+"used" vs "ignored" flag) — turning the telemetry into a visual debugging view.
+It pairs a FastAPI backend (`app/api.py`) wrapping the RAG engine with a React
+frontend (`app/frontend/`).
+
+![RAG Inspector — answer with citations](docs/inspector-answer.png)
+
+![RAG Inspector — retrieval details](docs/inspector-retrieval.png)
+
+### Running the app
+
+Two terminals.
+
+**Backend** (repo root, venv active, API key set):
+
+```powershell
+venv\Scripts\activate
+$env:ANTHROPIC_API_KEY="..."      # PowerShell  (cmd: set ANTHROPIC_API_KEY=...)
+uvicorn app.api:app --reload --port 8000
+```
+
+**Frontend** (in `app/frontend/`):
+
+```bash
+npm install
+npm run dev
+```
+
+Then open http://localhost:5173.
+
+The backend also serves interactive API docs at http://localhost:8000/docs.
+
+Retrieval runs without an API key; generation needs `ANTHROPIC_API_KEY`.
+
 ## Continuous evaluation
 
 Two GitHub Actions workflows gate this project:
