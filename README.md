@@ -46,9 +46,9 @@ exactly `"Not answerable from the provided context."`). `evals/run_evals.py`
 runs the full retrieve-and-generate pipeline against every case, scores all
 three types, and exits non-zero if anything fails.
 
-## Setup and running
+## Setup & running
 
-This project uses a venv folder 
+This project uses a venv folder named `venv` (note: not `.venv`).
 
 ```bash
 python -m venv venv
@@ -63,9 +63,14 @@ source venv/bin/activate         # macOS/Linux
 pip install -r requirements.txt
 ```
 
+`ANTHROPIC_API_KEY` is needed only for generation and evals — retrieval and
+telemetry run without it.
+
 ```bash
 set ANTHROPIC_API_KEY=...        # needed only for generation + evals
 ```
+
+### CLI and evals
 
 ```bash
 python rag.py "your question here"
@@ -75,8 +80,28 @@ python rag.py "your question here"
 python evals/run_evals.py
 ```
 
-Retrieval and telemetry run without an API key. Only generation and the LLM
-judge need `ANTHROPIC_API_KEY` set.
+### Web app (RAG Inspector)
+
+Two terminals.
+
+**Backend** (repo root, venv active, API key set):
+
+```powershell
+venv\Scripts\activate
+$env:ANTHROPIC_API_KEY="..."      # PowerShell  (cmd: set ANTHROPIC_API_KEY=...)
+uvicorn app.api:app --reload --port 8000
+```
+
+**Frontend** (in `app/frontend/`):
+
+```bash
+npm install
+npm run dev
+```
+
+Then open http://localhost:5173.
+
+The backend also serves interactive API docs at http://localhost:8000/docs.
 
 ## Design notes / known limitations
 
@@ -106,31 +131,6 @@ frontend (`app/frontend/`).
 ![RAG Inspector — answer with citations](docs/inspector-answer.png)
 
 ![RAG Inspector — retrieval details](docs/inspector-retrieval.png)
-
-### Running the app
-
-Two terminals.
-
-**Backend** (repo root, venv active, API key set):
-
-```powershell
-venv\Scripts\activate
-$env:ANTHROPIC_API_KEY="..."      # PowerShell  (cmd: set ANTHROPIC_API_KEY=...)
-uvicorn app.api:app --reload --port 8000
-```
-
-**Frontend** (in `app/frontend/`):
-
-```bash
-npm install
-npm run dev
-```
-
-Then open http://localhost:5173.
-
-The backend also serves interactive API docs at http://localhost:8000/docs.
-
-Retrieval runs without an API key; generation needs `ANTHROPIC_API_KEY`.
 
 ## Continuous evaluation
 
